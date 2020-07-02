@@ -1,0 +1,826 @@
+// Google Fonts
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+// Typography Variables
+$font-family: 'Roboto Condensed', sans-serif;
+$heading-font-family: 'Roboto Condensed', sans-serif;
+$heading-font-weight: 500;
+$base-font-size: 106.25;
+@import "typography";
+@import "utilities";
+@import "variables";
+
+// Last few variables to assign once the Typography styles are imported
+:root {
+    --body-font: #{$font-family};
+    --heading-font: #{$heading-font-family};
+}
+
+a {
+    color: var(--link-color);
+}
+
+// ================ Utility Styles ================
+.transitions-off {
+    transition: none !important;
+}
+
+
+// ================ Text Selection Styles ================
+::selection {
+    /* WebKit/Blink Browsers */
+    background: var(--text-select-background);
+    color: var(--text-select-color);
+}
+::-moz-selection {
+    /* Gecko Browsers */
+    background: var(--text-select-background);
+    color: var(--text-select-color);
+}
+
+
+// ================ Core Page Styles ================
+html, body {
+    margin: 0; padding: 0;
+    background: var(--body-background);
+    color: var(--body-color);
+}
+
+
+// ================ Structural Styles ================
+._laravel-admin {
+    &.page-wrapper {
+        width: 100%;
+        height: 100vh;
+    }
+
+    p { max-width: none; }
+
+    // Header Bar
+    .main-header {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        z-index: var(--header-z-index);
+        height: var(--header-height);
+        background: var(--header-background);
+        box-shadow: var(--header-box-shadow);
+
+        .brand-panel {
+            flex: 0 0 var(--sidebar-width);
+            background: var(--brand-panel-background);
+            border-right: var(--brand-panel-right-border);
+            z-index: 4000;
+
+            img {
+                max-height: calc(var(--header-height) - 1rem);
+                max-width: 90%;
+                margin: 0;
+            }
+        }
+
+        div.show-search { display: none; }
+
+        button.menu-toggle, button.show-search {
+            display: none;
+            @include clearAppearance;
+            width: var(--header-height);
+            color: #333;
+
+            i.fa.close-menu {
+                display: none;
+            }
+
+            &.is-active {
+                i.fa.open-menu {
+                    display: none;
+                }
+                i.fa.close-menu {
+                    display: inline;
+                }
+            }
+
+            &:focus {
+                outline: none;
+            }
+            &:hover, &.is-active {
+                // TODO: Potentially make this a CSS var
+                background: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        button.menu-toggle {
+            border-right: var(--menu-toggle-right-border);
+        }
+        button.show-search {
+            border-left: var(--menu-toggle-right-border);
+        }
+
+        .header-content {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+
+            .notifications-area {
+                flex: 1 1 auto;
+                align-self: stretch;
+                text-align: right;
+                @include no-select;
+            }
+        }
+    }
+
+    .main-sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        z-index: 3000;
+        height: calc(100vh - var(--header-height));
+        width: var(--sidebar-width);
+        background: var(--sidebar-background);
+        border-top: var(--sidebar-top-border);
+        box-shadow: var(--sidebar-box-shadow)
+    }
+
+    .main-content {
+        padding-top: var(--header-height);
+        padding-left: var(--sidebar-width);
+        z-index: 1000;
+
+        .inner-content {
+            padding: var(--main-content-y-padding) var(--main-content-x-padding);
+            box-shadow: var(--main-content-box-shadow);
+            min-height: calc(100vh - var(--header-height));
+
+            .container-fluid {
+                padding: 0;
+            }
+        }
+    }
+}
+
+
+// ================ Brand Panel Styles ================
+.brand-panel {
+    line-height: var(--header-height);
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--heading-font);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--brand-panel-color);
+
+    @include no-select;
+}
+
+
+// ================ Main Navigation Styles ================
+._laravel-admin .main-navigation {
+
+    .menu-title {
+        font-size: var(--title-font-size);
+        font-weight: var(--title-font-weight);
+        color: var(--title-color);
+        letter-spacing: var(--title-letter-spacing);
+        padding: var(--title-padding);
+        line-height: var(--title-line-height);
+        margin: var(--title-margin);
+        text-transform: var(--title-text-transform);
+        @include no-select;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+
+            button {
+                @include clearAppearance;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            a, button {
+                display: block;
+                position: relative;
+                font-size: var(--link-font-size);
+                padding: var(--link-padding);
+                color: var(--link-color);
+                transition: var(--link-transition);
+                background: var(--link-background-color);
+                border-bottom: var(--link-border-bottom);
+                @include no-select;
+
+                .menu-icon {
+                    font-size: var(--link-icon-font-size);
+                    margin-right: var(--link-icon-margin-right);
+                }
+
+                .children-indicator {
+                    position: absolute;
+                    display: inline;
+                    top: 50%;
+                    right: var(--link-right-padding);
+                    transform: translateY(-50%);
+                    font-size: 0.75em;
+                    color: var(--link-child-icon-color);
+                    transition: 0.2s ease all;
+                }
+
+                .counter {
+                    position: absolute;
+                    display: block;
+                    top: 50%;
+                    right: var(--link-right-padding);
+                    transform: translateY(-50%);
+                    text-align: center;
+                    background: var(--link-counter-background-color);
+                    color: var(--link-counter-color);
+                    min-width: var(--link-counter-size);
+                    height: var(--link-counter-size);
+                    font-size: var(--link-counter-font-size);
+                    line-height: var(--link-counter-line-height);
+                    border-radius: var(--link-counter-border-radius);
+                    transition: var(--link-counter-transition);
+                    padding: var(--link-counter-padding);
+                }
+
+                .children-indicator + .counter {
+                    right: calc(var(--link-right-padding) * 2 + 0.5rem);
+                }
+            }
+
+            &.active, &:hover {
+                a, button {
+                    text-decoration: none;
+                    background: var(--link-hover-background-color);
+                    color: var(--link-hover-color);
+                    text-decoration: var(--link-hover-text-decoration);
+
+                    .counter {
+                        background: var(--link-hover-counter-background-color);
+                    }
+                }
+            }
+        }
+
+        // Second level
+        li ul {
+            display: none;
+            padding-left: var(--subnav-indent);
+            background: var(--link-hover-background-color);
+            padding-top: calc(var(--link-top-padding) / 2);
+            padding-bottom: calc(var(--link-bottom-padding) / 2);
+
+            li {
+                list-style-type: none;
+
+                &:hover > a {
+                    text-decoration: var(--subnav-link-hover-text-decoration);
+                }
+            }
+
+            li a {
+                font-size: var(--subnav-link-font-size);
+                border: var(--subnav-link-border);
+                padding-top: var(--subnav-link-padding-top);
+                padding-bottom: var(--subnav-link-padding-bottom);
+            }
+        }
+
+        li.active {
+            & > a > .children-indicator {
+                transform-origin: center;
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            & > ul {
+                display: block;
+            }
+        }
+    }
+
+    & > ul {
+        border-top: 1px solid var(--layout-border-color, whitesmoke);
+    }
+
+    & > ul > li > ul {
+        border-bottom: 1px solid var(--layout-border-color, whitesmoke);
+    }
+
+    .mobile-account-menu {
+        display: none;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    10% { transform: scale(1.35); }
+    20% { transform: scale(1.15); }
+    30% { transform: scale(1.35); }
+    40% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0px red; }
+    20% { box-shadow: 0 0 8px 0px red; }
+    40% { box-shadow: 0 0 16px 0px rgba(255, 0, 0, 0); }
+    41% { box-shadow: 0 0 0 0px red; }
+    100% { box-shadow: 0 0 0 0px red; }
+}
+
+._laravel-admin .notifications-area {
+    padding-right: 1rem;
+
+    .notifications-dropdown {
+        display: inline-block;
+        position: relative;
+
+        &.has-unread::after {
+            content: '';
+            display: block;
+            width: 0.4rem;
+            height: 0.4rem;
+            background: var(--brand-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 30%;
+            left: 60%;
+            animation: pulse 2s infinite;
+        }
+
+        button {
+            @include clearAppearance;
+            height: var(--header-height);
+            width: var(--header-height);
+            color: var(--icon-color);
+            cursor: pointer;
+            transition: 0.2s ease all;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        &.is-active button, & button:hover {
+            background: var(--main-nav-hover-bg);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            display: none;
+            flex-direction: column;
+            background: white;
+            top: 100%;
+            right: 0;
+            width: 16rem;
+            max-height: 20rem;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+            .title, .footer {
+                border-bottom: 1px solid var(--layout-border-color);
+                border-top: 1px solid var(--layout-border-color);
+                text-align: center;
+            }
+
+            .title {
+                font-size: var(--title-font-size);
+                background: var(--title-background);
+                text-transform: var(--title-text-transform);
+                font-weight: var(--title-font-weight);
+                padding: var(--title-padding);
+            }
+
+            .footer {
+                font-size: var(--footer-font-size);
+                background: var(--footer-background-color);
+
+                a {
+                    display: block;
+                    padding: var(--footer-padding);
+                    color: var(--footer-color);
+                }
+            }
+
+            .body {
+                overflow: auto;
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        list-style-type: none;
+
+                        a, div {
+                            display: block;
+                            border-bottom: 1px solid var(--layout-border-color);
+                            font-size: var(--body-link-font-size);
+                            padding: var(--body-link-padding);
+                            color: var(--body-link-color);
+                        }
+
+                        &:last-child a {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.is-active .dropdown-content {
+            display: flex;
+        }
+    }
+}
+
+._laravel-admin .content-panel {
+    @include margin-bottom(1);
+}
+
+// Table styles
+table.table {
+    background: white;
+    font-size: var(--default-font-size);
+
+    td.actions {
+        text-align: center;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+
+        form {
+            display: inline;
+        }
+
+        button {
+            @include clearAppearance;
+            cursor: pointer;
+        }
+
+        a, button {
+            color: grey;
+            padding: 0 0.5rem;
+            font-size: 0.9rem;
+
+            &:hover {
+                color: var(--blue);
+            }
+
+            &.danger:hover {
+                color: var(--red);
+            }
+        }
+    }
+}
+
+.table-sm td, .table-sm th {
+    padding: .5rem .75rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background: #f3f4f5;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: #f6faff;
+    padding: var(--padding);
+
+    .left, .right {
+        flex: 1 0 auto;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    &::after {
+        position: absolute;
+        content: '';
+        background: transparent;
+        height: 100%;
+        width: 2rem;
+        top: -5px;
+        left: -2rem;
+        box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: var(--heading-font-size);
+    }
+
+    .breadcrumbs {
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline;
+            list-style-icon: none;
+
+            a {
+                position: relative;
+                font-size: var(--breadcrumbs-font-size);
+                margin-right: calc(var(--breadcrumbs-spacing) / 2);
+                margin-left: calc(var(--breadcrumbs-spacing) / 2);
+                color: var(--breadcrumbs-color);
+                transition: var(--breadcrumbs-transition);
+
+                &::after {
+                    content: var(--breadcrumbs-divider);
+                    position: absolute;
+                    top: 50%;
+                    left: calc(100% + calc(var(--breadcrumbs-spacing) / 2));
+                    transform: translateY(-50%);
+                }
+
+                &:hover {
+                    color: var(--breadcrumbs-hover-color);
+                    text-decoration: var(--breadcrumbs-hover-text-decoration);
+                }
+            }
+
+            &:first-child > a { margin-left: 0; }
+            &:last-child > a { margin-right: 0; }
+
+            &:last-child a::after {
+                display: none;
+            }
+        }
+    }
+}
+
+// Content Panel
+._laravel-admin .content-panel {
+    background: var(--background);
+    font-size: var(--font-size);
+    box-shadow: var(--box-shadow);
+
+    .body {
+        padding: 0 var(--body-x-padding);
+        max-height: 0px;
+        overflow: hidden;
+        transition: var(--body-transition);
+
+        &.is-open {
+            padding: var(--body-y-padding) var(--body-x-padding);
+            max-height: none;
+            overflow: auto;
+        }
+
+        .full-width {
+            margin-left: calc(var(--body-x-padding) * -1);
+            width: calc(100% + (var(--body-x-padding) * 2));
+            border-left: none;
+            border-right: none;
+
+            tr {
+                td:first-child, th:first-child {
+                    padding-left: var(--body-x-padding);
+                    border-left: none;
+                }
+                td:last-child, th:last-child {
+                    padding-right: var(--body-x-padding);
+                    border-right: none;
+                }
+            }
+        }
+
+        .no-y-padding {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .no-x-padding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .header {
+        display: flex;
+        border-bottom: var(--header-bottom-border);
+        @include no-select;
+
+        .title {
+            flex: 1 1 auto;
+            padding: var(--heading-y-padding) var(--heading-x-padding);
+            font-size: var(--heading-font-size);
+            line-height: var(--heading-line-height);
+            text-transform: var(--heading-text-transform);
+            font-weight: var(--heading-font-weight);
+            letter-spacing: var(--heading-letter-spacing);
+        }
+    }
+
+    button.action {
+        height: 100%;
+        width: calc((var(--heading-font-size) * var(--heading-line-height)) + (var(--heading-y-padding) * 2));
+        @include clearAppearance;
+        font-size: var(--action-button-font-size);
+        font-weight: var(--action-button-font-weight);
+        border-left: var(--action-button-divider-border);
+        cursor: pointer;
+        transition: var(--action-button-transition);
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            background: var(--action-button-hover-background);
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-xs)
+{
+    :root {
+        --main-nav-y-padding: 0.75rem;
+    }
+
+    ._laravel-admin .main-header {
+
+        div.show-search {
+            width: var(--header-height);
+        }
+
+        button.menu-toggle, button.show-search {
+            display: inline;
+            align-self: stretch;
+        }
+
+        .la_header-search-form {
+            position: absolute;
+            top: 100%;
+            right: -100%;
+            background: white;
+            width: 100%;
+            padding: 1rem 2rem;
+            border-top: 1px solid #e2e7ef;
+            border-bottom: 1px solid #e2e7ef;
+            transition: 0.3s ease all;
+
+            .search-input {
+                width: 100%;
+            }
+
+            &.open {
+                right: 0;
+            }
+        }
+    }
+
+    ._laravel-admin .main-header .brand-panel {
+        flex: 1 1 auto;
+    }
+
+    ._laravel-admin .main-header .header-content {
+        display: none;
+    }
+
+    ._laravel-admin .main-sidebar {
+        width: calc(100% - var(--header-height));
+        left: -100%;
+        transition: 0.3s ease all;
+
+        &.open {
+            left: 0;
+        }
+
+        &::after {
+            content: '';
+        }
+    }
+
+    ._laravel-admin .main-content {
+        padding-left: 0;
+
+        .inner-content {
+            box-shadow: none;
+
+            .row {
+                margin-left: calc(var(main-content-x-padding) * -1);
+                margin-right: calc(var(main-content-x-padding) * -1);
+            }
+        }
+    }
+
+    ._laravel-admin .main-navigation .mobile-account-menu {
+        display: block;
+    }
+}
+
+// Buttons
+.btn {
+
+    .fa {
+        font-size: 0.9em;
+        margin-right: 0.25rem;
+    }
+}
+
+
+// ================ Pagination Styles ================
+.pagination {
+    display: inline-block;
+    margin: 0;
+    font-size: 0;
+
+    & > li {
+        display: inline;
+        font-size: 0;
+    }
+
+    & > li > a,
+    & > li > span {
+        display: inline-block;
+        background: white;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid var(--border-color);
+        border-right: none;
+        text-align: center;
+        line-height: 2rem;
+    }
+
+    & > li:last-child {
+        & > a, & > span {
+            border-right: 1px solid var(--border-color);
+        }
+    }
+
+    & > li:first-child > a,
+    & > li:first-child > span,
+    & > li:last-child > a,
+    & > li:last-child > span {
+        border-radius: 0;
+    }
+
+    & > li:not(.active) > a:hover,
+    & > li:not(.active) > span:hover,
+    & > li:not(.active) > a:focus,
+    & > li:not(.active) > span:focus {
+        color: var(--hover-text-color);
+        text-decoration: none;
+    }
+
+    & > .active {
+        & > a, & > span,
+        & > a:hover, & > span:hover,
+        & > a:focus, & > span:focus {
+            color: var(--active-text-color);
+            background: var(--active-background-color);
+            border-color: var(--active-border-color);
+            text-decoration: none;
+        }
+
+        & + li {
+            & > a, & > span {
+                border-left-color: var(--active-border-color);
+            }
+        }
+    }
+
+    .disabled {
+        cursor: not-allowed;
+
+        & > a:hover, & > span:hover,
+        & > a:focus, & > span:focus {
+            cursor: not-allowed;
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+}
+
+// Bootstrap Form overrides
+label {
+    font-size: var(--label-font-size);
+    margin-bottom: var(--label-margin-bottom);
+}
+
+.form-text {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+label + .form-control {
+    margin-top: 0.25rem;
+}
+
+.form-control {
+    border-radius: 0;
+    font-size: var(--input-font-size);
+    height: auto;
+}
