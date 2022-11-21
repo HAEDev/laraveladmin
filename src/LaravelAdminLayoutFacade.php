@@ -1,6 +1,6 @@
 <?php
 
-namespace Lnch\LaravelAdmin;
+namespace lnch\laraveladmin;
 
 use Illuminate\Support\Facades\Facade;
 

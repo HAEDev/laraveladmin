@@ -1,5 +1,5 @@
 {
-    "name": "lnch/laravel-admin",
+    "name": "lnch/laraveladmin",
     "description": "An admin panel framework for Laravel 5",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Lnch\\LaravelAdmin\\": "src"
+            "lnch\\laraveladmin\\": "src"
         },
         "files": [
             "src/helpers.php"
@@ -18,10 +18,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Lnch\\LaravelAdmin\\LaravelAdminServiceProvider"
+                "lnch\\laraveladmin\\LaravelAdminServiceProvider"
             ],
             "aliases": {
-                "LaravelAdmin": "Lnch\\LaravelAdmin\\LaravelAdminLayoutFacade"
+                "laraveladmin": "lnch\\laraveladmin\\LaravelAdminLayoutFacade"
             }
         }
     }
