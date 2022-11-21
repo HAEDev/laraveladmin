@@ -2,7 +2,7 @@
 
 namespace lnch\laraveladmin;
 
-use lnch\laraveladmin\Commands\AssetLinkCommand;
+use lnch\laraveladmin\commands\AssetLinkCommand;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelAdminServiceProvider extends ServiceProvider

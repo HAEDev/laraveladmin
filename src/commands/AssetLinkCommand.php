@@ -1,6 +1,6 @@
 <?php
 
-namespace lnch\laraveladmin\Commands;
+namespace lnch\laraveladmin\commands;
 
 use Illuminate\Console\Command;
 
